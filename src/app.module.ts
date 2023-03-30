@@ -8,10 +8,10 @@ import { Categoria } from './categorias/entities/categoria.entity';
 
 @Module({
   imports: [TypeOrmModule.forRoot({
-    type: 'mysql',
+    type: 'postgres',
     host: '127.0.0.1',
-    port: 3306,
-    username: 'root',
+    port: 5432,
+    username: 'postgres',
     password: 'root',
     database: 'test',
     entities: [Categoria],
