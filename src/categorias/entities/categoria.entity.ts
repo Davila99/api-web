@@ -6,8 +6,5 @@ export class Categoria {
   id: number;
 
   @Column()
-  firstName: string;
-
-  @Column()
-  lastName: string;
+  descripcion: string;
 }
