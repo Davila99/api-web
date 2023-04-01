@@ -12,7 +12,9 @@ export class CategoriasService {
     private categoriaRepository: Repository<Categoria>,
   ) {}
   create(createCategoriaDto: CreateCategoriaDto) {
-    return 'This action adds a new categoria';
+    const categoria = this.categoriaRepository.create(createCategoriaDto);
+    this.categoriaRepository.save(categoria);
+    return 'categoria registrado correctamente';
   }
 
   findAll(): Promise<Categoria[]> {
@@ -20,14 +22,16 @@ export class CategoriasService {
   }
 
   findOne(id: number) {
-    return `This action returns a #${id} categoria`;
+    return this.categoriaRepository.findOneBy({ id });
   }
 
   update(id: number, updateCategoriaDto: UpdateCategoriaDto) {
     return `This action updates a #${id} categoria`;
   }
 
-  remove(id: number) {
-    return `This action removes a #${id} categoria`;
+  async remove(id: string) {
+    const categoria = await this.findOne(+id);
+    await this.categoriaRepository.remove(categoria);
+    return `categoria eliminada`;
   }
 }
