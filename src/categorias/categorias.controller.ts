@@ -27,8 +27,9 @@ export class CategoriasController {
     return this.categoriasService.update(+id, updateCategoriaDto);
   }
 
+  
   @Delete(':id')
-  remove(@Param('id',ParseUUIDPipe) id: string) {
-    return this.categoriasService.remove(id);
+  remove(@Param('id') id: string) {
+    return this.categoriasService.remove(+id);
   }
 }
