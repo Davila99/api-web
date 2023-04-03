@@ -11,13 +11,14 @@ export class CategoriasService {
     @InjectRepository(Categoria)
     private categoriaRepository: Repository<Categoria>,
   ) {}
-  create(createCategoriaDto: CreateCategoriaDto) {
-    const categoria = this.categoriaRepository.create(createCategoriaDto);
-    this.categoriaRepository.save(categoria);
-    return 'categoria registrado correctamente';
+  async create(categoriaDto: CreateCategoriaDto) {
+    const categoria = this.categoriaRepository.create(categoriaDto);
+    await this.categoriaRepository.save(categoria);
+
+    return categoria;
   }
 
-  findAll(): Promise<Categoria[]> {
+  findAll() {
     return this.categoriaRepository.find();
   }
 
@@ -25,12 +26,19 @@ export class CategoriasService {
     return this.categoriaRepository.findOneBy({ id });
   }
 
-  update(id: number, updateCategoriaDto: UpdateCategoriaDto) {
-    return `This action updates a #${id} categoria`;
+  async  update(id: number, updatecategoriaDto:  UpdateCategoriaDto) {
+    const findCategoria = await this.findOne(id);
+    const updatecategoria = await this.categoriaRepository.merge(
+      findCategoria,
+      updatecategoriaDto
+    );
+
+    return this.categoriaRepository.save(updatecategoria);
   }
 
-  async remove(id: string) {
-    const categoria = await this.findOne(+id);
+  
+  async remove(id: number) {
+    const categoria = await this.findOne(id);
     await this.categoriaRepository.remove(categoria);
     return `categoria eliminada`;
   }
